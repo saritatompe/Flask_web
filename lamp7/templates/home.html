@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Exercise 4 and 5</title>
+  </head>
+  <style>
+  body{
+    background-image: url('https://cdn.pizap.com/pizapfiles/images/photo_backgrounds_textures_app04.jpg');
+    background-repeat: no-repeat;
+     background-size: cover;
+
+  }
+  fieldset{
+    border: 1px solid rgb(255,232,57);
+    width: 400px;
+    margin:auto;
+    color: white
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    color: white
+
+  }
+  label{
+    font-family: cursive;
+  }
+  input[type=text] {
+  width: 200px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #2E93AD;
+  border-radius: 4px;
+}
+
+  /* tr:nth-child(even) {
+    background-color: #dddddd;
+  } */
+  h1{
+    color: #FFC300  ;
+  }
+  .button {
+
+border: 2px solid #4CAF50;
+ background-color: white; 
+
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+}
+  </style>
+  <body>
+   <h1 align="center">Add Student into Student Database</h1>
+   <form align="center"  method="POST" action="/">
+     <fieldset>
+       <legend>Student Result</legend>
+       <label for="name">Name: </label>
+       <input type="text" name="name"><br>
+       <label for="grade">Grade: </label>
+       <input type="text" name="grade"><br>
+       <input class="button" type="submit" value="Add">
+     </fieldset>
+   </form>
+
+   <h1 align="center">Student Database</h1>
+   <table align="center">
+     <tr>
+       <th>Name</th>
+       <th>Grade</th>
+	   <th>UPDATE</th>
+	   <th>DELETE</th>
+     </tr>
+     {% for student in students %}
+       <tr>
+         <td>
+           {{student.name}}
+         </td>
+		  {% if student.grade >= 85 %}
+         <td style=" background-color: ForestGreen ; ">
+            {{student.grade}}
+         </td>
+		 {% endif %}
+		  {% if student.grade < 85 %}
+         <td style=" background-color: red; ">
+            {{student.grade}}
+         </td>
+		 {% endif %}
+         <td>
+           <form method="POST" action="./update" style="display: inline">
+             <input type="hidden" value="{{student.grade}}" name="oldgrade">
+             <input type="text" value="{{student.grade}}" name="newgrade">
+             <input class="button" type="submit" value="Update Grades">
+           </form>
+         </td>
+         <td>
+           <form method="POST" action="./delete" style="display: inline">
+             <input type="hidden" value="{{student.name}}" name="name">
+             <input class="button" type="submit" value="Delete">
+           </form>
+         </td>
+       </tr>
+       {% endfor %}
+   </table><br>
+   <div class="container">
+     <div align="center" class="row">
+       <div  class="col-md-6" style="width:15px;height:15px;background:green"></div>
+       <label style="color:white">Passed: Grades >=85</label><br><br>
+       <div class="col-md-6" style="width:15px;height:15px;background:red"></div>
+       <label style="color:white">Failed: Grades <85</label>
+     </div>
+   </div>
+ </body>
+</html>
